@@ -1,5 +1,5 @@
 import type { Faker } from "../..";
-
+import type {IntOption} from './type'
 export class NumberModule {
   
   constructor(private readonly faker: Faker) {
@@ -14,22 +14,9 @@ export class NumberModule {
       this[name] = this[name].bind(this);
     }
   }
-    int(options:
-        | number
-        | {
-            /**
-             * 最小值
-             *
-             * @default 0
-             */
-            min?: number;
-            /**
-             * 最大值
-             *
-             * @default Number.MAX_SAFE_INTEGER
-             */
-            max?: number;
-          } = {}){
+
+  // 生成随机int类型
+    int(options:IntOption = {}){
         if (typeof options === 'number') {
             options = { max: options };
           }
