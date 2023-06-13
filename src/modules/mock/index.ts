@@ -18,7 +18,7 @@ export class MockModule {
         }
     }
 
-      mock(template : mockOptions){
+      mock(template : any){
         return this.gen(template);
       }
 
@@ -78,8 +78,10 @@ export class MockModule {
           return result;
       }
 
-      number(){
-
+      number(options: GenerateOptions){
+        let result
+        result = this.faker.random.number()
+        return result
       }
 
       object(options:GenerateOptions){
@@ -97,11 +99,11 @@ export class MockModule {
         return result
       }
 
-      array(){
-
+      array(options:GenerateOptions){
+        return options.template
       }
 
       boolean(){
-
+        return this.faker.random.boolean()
       }
 }

@@ -54,5 +54,21 @@ describe('mock', () => {
     //   const randomString = faker.mock('')
     //   expect(randomString).toBeTypeOf('string');
     // });
+
+    describe('mock array',()=>{
+      it("mock single object params work", () => {
+        const result = faker.mock({
+          "array|1-10": [
+            "Mock.js"
+          ]
+        })
+        console.log(result)
+        expect(Array.isArray(result.array)).toBe(true);
+        expect(result.array[0]).toBe('Mock.js')
+        expect(result.array.length).toBeGreaterThanOrEqual(1)
+        expect(result.array.length).toBeLessThanOrEqual(10);
+      });
+  
+    })
   })
 })

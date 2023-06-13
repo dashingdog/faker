@@ -21,9 +21,51 @@ const num = faker.random.number()
 
 ### random
 
+``` js
+// 生成随机数字
+faker.random.number(min,max):number
+// 生成随机字符串
+faker.random.string(min,max):string
+//生成随机布尔值
+faker.random.boolean():boolean
+// 生成随机手机号
+faker.random.phone()):string
+```
+
+### date
+
+``` js
+// 生成一个随机日期
+faker.date.recent(option:DateOption):Date
+
+DateOption = { days?: number; refDate?: string | Date | number }
+```
+
 
 
 
 ## 模板功能
 
 ### mock
+
+``` js
+// 支持调用函数
+faker.mock('@number')
+
+faker.mock('@number(1,100)')
+
+// 支持生成对象
+faker.mock({
+  "array|1-10": [
+    "Mock.js"
+  ]
+})
+
+// 支持生成数组
+faker.mock({
+    'string|1-10':'***',
+    'number|1-100':20
+})
+
+```
+
