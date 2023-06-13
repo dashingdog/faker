@@ -1,7 +1,7 @@
 import type { Faker } from "../..";
-import type { mockOptions } from './type'
+import type { mockOptions,GenerateOptions } from './type'
 import {getType} from '../../utils/type'
-import {RE_PLACEHOLDER} from '../../utils/constant'
+import {RE_PLACEHOLDER,RE_KEY} from '../../utils/constant'
 export class MockModule {
     [key: string]: any;
 
@@ -44,32 +44,57 @@ export class MockModule {
           return data
       }
 
-      string(options){
+      string(options:GenerateOptions){
         let source = ''
         let match
         let result = ''
         if(options.template.length){
           RE_PLACEHOLDER.exec('')
-          while (match = RE_PLACEHOLDER.exec(options.template)) {
-            console.log(match)
-            const handler = this.faker.random[match[1]]
-            const replaced = handler();
-            if(replaced)
-            result = replaced
+          match = RE_PLACEHOLDER.exec(options.template)
+          console.log(match)
+          if(match){
+            const fnAll = match[0]
+            const fnName = match[1]
+            const handler = this.faker.random[fnName]
+            const regExp = /\(([^)]*)\)/;
+            const matches = regExp.exec(fnAll);
+            let parameters = '';
+            if (matches) {
+              parameters = matches[1];
+            }
+            try{
+              const params = JSON.parse(`[${parameters}]`);
+              const replaced = handler(...params);
+              if(replaced!==undefined)
+              result = replaced
+            }catch(error){
+              console.log(error)
+            }
           }
         }else{
             // 调用生成随机字符串
             result = this.faker.random.string()
-        }
-        return result;
+          }
+          return result;
       }
 
       number(){
 
       }
 
-      object(){
+      object(options:GenerateOptions){
+        const result = {}
 
+        // 储存所有key
+        let keys: string[] = Object.keys(options.template);
+        keys.forEach(key=>{
+          // 过滤掉|后面的部分 string|1-2 保留string
+          let parsedKey = key.replace(RE_KEY, '$1')
+          const generatedValue = this.gen(options.template[key],key);
+          result[parsedKey] = generatedValue
+        })
+
+        return result
       }
 
       array(){

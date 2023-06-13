@@ -126,6 +126,13 @@ describe('string', () => {
           expect(() => faker.string.alpha(input)).not.toThrow();
           expect(input.exclude).toEqual(['a', '%']);
         });
+
+        it('include is work', () => {
+          expect(faker.string.alpha({
+            length: 2,
+            include: ['***'],
+          })).toBe('******')
+        });
       });
 
       describe('alphaNumeric', () => {

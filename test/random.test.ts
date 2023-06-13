@@ -6,6 +6,15 @@ describe('random', () => {
     expect(faker.random.number()).toBeTypeOf('number')
   })
 
+  it('random.number default work',()=>{
+      const randomNum = faker.random.number(3,5)
+      expect(randomNum).toBeGreaterThanOrEqual(3);
+      expect(randomNum).toBeLessThanOrEqual(5);  })
+
+  it('random.string default work',()=>{
+    expect(faker.random.string()).toBeTypeOf('string')
+  })
+
   it('random.string default work',()=>{
     expect(faker.random.string()).toBeTypeOf('string')
   })

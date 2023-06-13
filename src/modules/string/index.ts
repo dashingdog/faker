@@ -148,6 +148,7 @@ export class StringModule {
         };
         
       casing?: Casing;
+      include?: string[];
       exclude?: ReadonlyArray<LiteralUnion<AlphaChar>> | string;
     } = {}
   ):string{
@@ -182,7 +183,9 @@ export class StringModule {
         charsArray = [...LOWER_CHARS, ...UPPER_CHARS];
         break;
     }
-
+    if(Array.isArray(options.include)){
+      charsArray = options.include
+    }
     charsArray = charsArray.filter((elem) => !exclude.includes(elem));
 
     return this.fromCharacters(charsArray, length);

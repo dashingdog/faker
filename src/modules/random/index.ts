@@ -19,12 +19,25 @@ export class RandomModule {
         return Math.random() < 0.5;
     }
 
-    number(){
-        return this.faker.number.int()
+    number(min?:number,max?:number){
+        return this.faker.number.int({
+            min,
+            max
+        })
     }
 
-    string(){
-        return this.faker.string.alpha();
+    string(min=1,max=5){
+        return this.faker.string.alpha(
+            { length: { min, max }}
+            );
+    }
+
+    id(){
+
+    }
+
+    phone(){
+        
     }
     
 }
