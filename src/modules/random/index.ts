@@ -7,7 +7,7 @@ function generateRandomDigits(length:number) {
     return digits;
   }
 export class RandomModule {
-
+   [key: string]: any;
     constructor(private readonly faker: Faker) {
         // Bind `this` so namespaced is working correctly
         for (const name of Object.getOwnPropertyNames(
@@ -38,9 +38,6 @@ export class RandomModule {
             );
     }
 
-    id(){
-    
-    }
 
     phone(){
         const areaCodes = [

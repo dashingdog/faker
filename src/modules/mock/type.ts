@@ -1,4 +1,5 @@
 
+import {parse} from './parse'
 interface GenerateContext {
     path: Array<string | number>;
     templatePath: Array<string | number>;
@@ -11,7 +12,7 @@ export interface GenerateOptions {
     type: string;
     template: any;
     name: string;
-    // rule: ReturnType<typeof parse>;
+    rule: ReturnType<typeof parse>;
     context: GenerateContext;
     parsedName: string;
   }

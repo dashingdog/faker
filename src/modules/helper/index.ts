@@ -72,7 +72,6 @@ export class HelpersModule {
 
       // 从给定的数组中返回随机元素。
       arrayElement<T>(array: ReadonlyArray<T>): T {
-        // TODO @xDivisionByZerox 2023-04-20: Remove in v9
         if (array == null) {
           throw new FakerError(
             'Calling `faker.helpers.arrayElement()` without arguments is no longer supported.'

@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { faker } from '../src';
-
+import { FakerError } from '../src';
 describe('number', () => {
     describe('int', () => {
         it('should return an integer between 0 and Number.MAX_SAFE_INTEGER (inclusive) by default', () => {
@@ -104,23 +104,23 @@ describe('number', () => {
           expect(() => faker.number.int(input)).not.toThrow();
         });
   
-        // it('should throw when min > max', () => {
-        //   const min = 10;
-        //   const max = 9;
+        it('should throw when min > max', () => {
+          const min = 10;
+          const max = 9;
   
-        //   expect(() => {
-        //     faker.number.int({ min, max });
-        //   }).toThrow(
-        //     new FakerError(`Max ${max} should be greater than min ${min}.`)
-        //   );
-        // });
+          expect(() => {
+            faker.number.int({ min, max });
+          }).toThrow(
+            new FakerError(`Max ${max} should be greater than min ${min}.`)
+          );
+        });
   
-        // it('should throw when there is no integer between min and max', () => {
-        //   expect(() => {
-        //     faker.number.int({ min: 2.1, max: 2.9 });
-        //   }).toThrow(
-        //     new FakerError(`No integer value between 2.1 and 2.9 found.`)
-        //   );
-        // });
+        it('should throw when there is no integer between min and max', () => {
+          expect(() => {
+            faker.number.int({ min: 2.1, max: 2.9 });
+          }).toThrow(
+            new FakerError(`No integer value between 2.1 and 2.9 found.`)
+          );
+        });
       });
 })

@@ -23,7 +23,7 @@ describe('random', () => {
     expect(faker.random.boolean()).toBeTypeOf('boolean')
   })
 
-  it('random.id  work',()=>{
+  it('random.phone  work',()=>{
     expect(faker.random.phone().length).toBe(11)
   })
 })

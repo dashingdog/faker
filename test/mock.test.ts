@@ -62,7 +62,6 @@ describe('mock', () => {
             "Mock.js"
           ]
         })
-        console.log(result)
         expect(Array.isArray(result.array)).toBe(true);
         expect(result.array[0]).toBe('Mock.js')
         expect(result.array.length).toBeGreaterThanOrEqual(1)

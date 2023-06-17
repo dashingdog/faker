@@ -1,4 +1,4 @@
-import type { Faker } from "../..";
+import { type Faker,FakerError } from "../..";
 import type {IntOption} from './type'
 export class NumberModule {
   
@@ -28,7 +28,13 @@ export class NumberModule {
             return effectiveMin;
           }
           if (effectiveMax < effectiveMin) {
-            // 异常提示
+            if (max >= min) {
+              throw new FakerError(
+                `No integer value between ${min} and ${max} found.`
+              );
+            }
+      
+            throw new FakerError(`Max ${max} should be greater than min ${min}.`);
           }
           const real = Math.random();
           return Math.floor(real * (effectiveMax + 1 - effectiveMin) + effectiveMin);

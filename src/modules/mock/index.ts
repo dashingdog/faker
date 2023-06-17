@@ -2,6 +2,7 @@ import type { Faker } from "../..";
 import type { mockOptions,GenerateOptions } from './type'
 import {getType} from '../../utils/type'
 import {RE_PLACEHOLDER,RE_KEY} from '../../utils/constant'
+import {parse} from './parse'
 export class MockModule {
     [key: string]: any;
 
@@ -23,29 +24,30 @@ export class MockModule {
       }
 
       gen(template:mockOptions,name?:string){
+        name = name === undefined ? '' : name.toString()
         // TODO: 校验下template合法性
         // 获取类型
         const type = getType(template);
         if(!this.hasOwnProperty(type)&&!(typeof this[type] === 'function')){
             return template
         }
-        const context={}
+        // const context={}
+        const rule = parse(name)
         const data = this[type]({
             type, // 属性值类型
             template, // 属性值模板
-            // name, // 属性名
-            // rule,
+            name, // 属性名
+            rule,
             // context,
-            // parsedName: name ? name.replace(constant.RE_KEY, '$1') : name,
+            parsedName: name ? name.replace(RE_KEY, '$1') : name,
           })
-          if (!context.root) {
-            context.root = data
-          }
+          // if (!context.root) {
+          //   context.root = data
+          // }
           return data
       }
 
       string(options:GenerateOptions){
-        let source = ''
         let match
         let result = ''
         if(options.template.length){
@@ -70,6 +72,8 @@ export class MockModule {
             }catch(error){
               console.log(error)
             }
+          }else{
+            return options.template 
           }
         }else{
             // 调用生成随机字符串
@@ -85,7 +89,7 @@ export class MockModule {
       }
 
       object(options:GenerateOptions){
-        const result = {}
+        const result: { [key: string]: any } = {} 
 
         // 储存所有key
         let keys: string[] = Object.keys(options.template);
@@ -100,7 +104,17 @@ export class MockModule {
       }
 
       array(options:GenerateOptions){
-        return options.template
+        const {rule} = options;
+        let {min , max} = rule
+        if(min){
+          max = max || min
+          return this.faker.helpers.multiple(()=>{
+            return this.gen(this.faker.helpers.arrayElement( options.template))
+          },{count:{min,max}})
+        }
+        return options.template.map((item:mockOptions)=>{
+          this.gen(item)
+        });
       }
 
       boolean(){
