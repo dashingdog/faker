@@ -53,7 +53,6 @@ export class MockModule {
         if(options.template.length){
           RE_PLACEHOLDER.exec('')
           match = RE_PLACEHOLDER.exec(options.template)
-          console.log(match)
           if(match){
             const fnAll = match[0]
             const fnName = match[1]

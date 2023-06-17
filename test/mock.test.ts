@@ -44,7 +44,6 @@ describe('mock', () => {
         'string|1-10':'***',
         'number|1-100':20
       })
-      console.log(result)
       expect(result).toBeTypeOf('object');
       expect(result.string).toBeTypeOf('string')
       expect(result.number).toBeTypeOf('number')
